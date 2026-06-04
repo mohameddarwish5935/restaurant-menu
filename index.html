@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مأكولات الشام - أبو محسن السوري | المنيو الإلكتروني</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0b733b; /* اللون الأخضر الأساسي للشعار */
+            --accent-color: #f1c40f;  /* اللون الأصفر المميز للشعار */
+            --secondary-color: #1e272e;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* الهيدر ورأس الصفحة */
+        header {
+            background: linear-gradient(rgba(11, 115, 59, 0.9), rgba(30, 39, 46, 0.95)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        .logo-placeholder {
+            width: 120px;
+            height: 120px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo-placeholder i {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header .sub-title {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* شريط التنقل بين الأقسام */
+        .categories-nav {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 15px 20px;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            overflow-x: auto;
+            scrollbar-width: none; /* لإخفاء شريط التمرير في فايرفوكس */
+        }
+
+        .categories-nav::-webkit-scrollbar {
+            display: none; /* لإخفاء شريط التمرير في كروم وإيدج */
+        }
+
+        .category-btn {
+            background: #edf2f7;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            transition: 0.3s ease;
+            text-decoration: none;
+            color: var(--secondary-color);
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* حاوية المنيو */
+        .menu-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .section-wrapper {
+            margin-bottom: 35px;
+            scroll-margin-top: 80px; /* لضبط التمرير عند الضغط على الأزرار */
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .section-title i {
+            color: var(--accent-color);
+            background: var(--primary-color);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* شبكة وقوائم الوجبات */
+        .items-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 4px solid var(--primary-color);
+            transition: 0.2s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        /* أسعار متعددة (وسط / كبير) */
+        .price-variants {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 10px;
+        }
+
+        .price-tag {
+            background: #fff9db;
+            color: #c91a1a;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border: 1px solid #ffe066;
+        }
+
+        .price-single {
+            color: #c91a1a;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-top: auto;
+        }
+
+        /* قسم الثومية الإضافية */
+        .extra-box {
+            background: #fff;
+            border: 2px dashed var(--primary-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .extra-item {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .extra-item span {
+            color: #c91a1a;
+        }
+
+        /* قسم التواصل والعنوان */
+        .contact-section {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .contact-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .address-box {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        .address-box i {
+            color: var(--accent-color);
+            margin-left: 8px;
+        }
+
+        .phone-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .btn-call {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            background: #2d3436;
+            border: 1px solid #485460;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .btn-call:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .whatsapp-sticky {
+            background: #25D366 !important;
+            border-color: #25D366 !important;
+            grid-column: 1 / -1; /* يأخذ العرض بالكامل لتمييزه كواتساب */
+        }
+
+        footer {
+            background-color: #11171a;
+            color: #a4b0be;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85rem;
+            border-top: 1px solid #1e272e;
+        }
+
+        /* توافق الشاشات الصغيرة للموبايل */
+        @media (max-width: 480px) {
+            header h1 { font-size: 1.8rem; }
+            header .sub-title { font-size: 1.2rem; }
+            .items-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-placeholder">
+            <i class="fas fa-hamburger"></i>
+        </div>
+        <h1>مأكولات الشام</h1>
+        <div class="sub-title">أبو محسن السوري</div>
+        <p>First Burger - مذاق الشام الأصيل على أصوله 🌯✨</p>
+    </header>
+
+    <div class="categories-nav">
+        <a href="#shawarma" class="category-btn">شاورما الشام</a>
+        <a href="#shawarma-meals" class="category-btn">وجبات الشاورما العربي</a>
+        <a href="#maria" class="category-btn">ماريا الشام</a>
+        <a href="#fatteh" class="category-btn">فتة الشاورما</a>
+        <a href="#western-sandwiches" class="category-btn">ساندوتشات الغربي</a>
+        <a href="#western-meals" class="category-btn">وجبات الغربي</a>
+        <a href="#crepes" class="category-btn">الكريبات</a>
+        <a href="#falafel" class="category-btn">فلافل الشام</a>
+    </div>
+
+    <div class="menu-container">
+
+        <div class="section-wrapper" id="shawarma">
+            <h2 class="section-title"><i class="fas fa-fire"></i> شاورما الشام</h2>
+            <div class="items-list">
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">شاورما الشام</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 75 ج.م</span>
+                        <span class="price-tag">كبير: 90 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">كايزر شاورما</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 60 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">فرنساوي شاورما</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 80 ج.م</span>
+                        <span class="price-tag">كبير: 90 ج.م</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-wrapper" id="shawarma-meals">
+            <h2 class="section-title"><i class="fas fa-utensils"></i> وجبات الشاورما العربي</h2>
+            <div class="items-list">
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">وجبة عربي سنجل (ساندوتش)</span></div>
+                    <span class="price-single">125 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">وجبة عربي دبل (ساندوتشين)</span></div>
+                    <span class="price-single">220 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">وجبة عربي تريبل (3 ساندوتشات)</span></div>
+                    <span class="price-single">320 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">وجبة عربي فاميلي (5 ساندوتشات)</span></div>
+                    <span class="price-single">470 ج.م</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-wrapper" id="maria">
+            <h2 class="section-title"><i class="fas fa-bread-slice"></i> ماريا الشام</h2>
+            <div class="items-list">
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">ماريا شاورما</span></div>
+                    <span class="price-single">145 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">ماريا كرسبي</span></div>
+                    <span class="price-single">145 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">ماريا زنجر</span></div>
+                    <span class="price-single">145 ج.m</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">ماريا بانية</span></div>
+                    <span class="price-single">150 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">ماريا كرسبي وشاورما</span></div>
+                    <span class="price-single">150 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">ماريا زنجر وشاورما</span></div>
+                    <span class="price-single">160 ج.م</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-wrapper" id="fatteh">
+            <h2 class="section-title"><i class="fas fa-bowl-rice"></i> فتة الشاورما</h2>
+            <div class="items-list">
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">فتة شاورما M</span></div>
+                    <span class="price-single">110 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">فتة شاورما L</span></div>
+                    <span class="price-single">125 ج.م</span>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">فتة شاورما XL</span></div>
+                    <span class="price-single">145 ج.م</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-wrapper" id="western-sandwiches">
+            <h2 class="section-title"><i class="fas fa-cloud-meatball"></i> ساندوتشات الغربي (صاج)</h2>
+            <div class="items-list">
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">كرسبي</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 75 ج.م</span>
+                        <span class="price-tag">كبير: 90 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">إستربس</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 75 ج.م</span>
+                        <span class="price-tag">كبير: 90 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">زنجر</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 75 ج.م</span>
+                        <span class="price-tag">كبير: 90 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">اسكالوب</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 75 ج.م</span>
+                        <span class="price-tag">كبير: 95 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">بطاطس</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 40 ج.م</span>
+                        <span class="price-tag">كبير: 50 ج.م</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-wrapper" id="western-meals">
+            <h2 class="section-title"><i class="fas fa-drumstick-bite"></i> وجبات الغربي</h2>
+            <div class="items-list">
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">استربس</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">2 قطع: 110 ج.م</span>
+                        <span class="price-tag">3 قطع: 145 ج.م</span>
+                        <span class="price-tag">4 قطع: 180 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">كريسبي</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">2 قطع: 125 ج.م</span>
+                        <span class="price-tag">3 قطع: 150 ج.م</span>
+                        <span class="price-tag">4 قطع: 190 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">زنجر</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">2 قطع: 115 ج.م</span>
+                        <span class="price-tag">3 قطع: 145 ج.م</span>
+                        <span class="price-tag">4 قطع: 180 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">اسكالوب</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">2 قطع: 145 ج.م</span>
+                        <span class="price-tag">3 قطع: 155 ج.م</span>
+                        <span class="price-tag">4 قطع: 185 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">بانية</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">2 قطع: 125 ج.م</span>
+                        <span class="price-tag">3 قطع: 155 ج.م</span>
+                        <span class="price-tag">4 قطع: 185 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">وجبة الملوك</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">2 قطع: 150 ج.م</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-wrapper" id="crepes">
+            <h2 class="section-title"><i class="fas fa-egg"></i> الكريبات</h2>
+            <div class="items-list">
+                <div class="item-card"><div class="item-header"><span class="item-name">ميكس فراخ</span></div><span class="price-single">130 ج.م</span></div>
+                <div class="item-card"><div class="item-header"><span class="item-name">تشيكن باربيكيو</span></div><span class="price-single">120 ج.م</span></div>
+                <div class="item-card"><div class="item-header"><span class="item-name">تشيكن رانش</span></div><span class="price-single">125 ج.م</span></div>
+                <div class="item-card"><div class="item-header"><span class="item-name">زنجر</span></div><span class="price-single">115 ج.م</span></div>
+                <div class="item-card"><div class="item-header"><span class="item-name">اسكالوب</span></div><span class="price-single">115 ج.م</span></div>
+                <div class="item-card"><div class="item-header"><span class="item-name">بانية</span></div><span class="price-single">115 ج.م</span></div>
+                <div class="item-card"><div class="item-header"><span class="item-name">بطاطس</span></div><span class="price-single">80 ج.م</span></div>
+                <div class="item-card"><div class="item-header"><span class="item-name">شاورما</span></div><span class="price-single">125 ج.م</span></div>
+                <div class="item-card"><div class="item-header"><span class="item-name">استربس</span></div><span class="price-single">115 ج.م</span></div>
+            </div>
+        </div>
+
+        <div class="section-wrapper" id="falafel">
+            <h2 class="section-title"><i class="fas fa-leaf"></i> فلافل الشام والإضافات</h2>
+            <div class="items-list">
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">ساندوتش فلافل</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 15 ج.م</span>
+                        <span class="price-tag">كبير: 25 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">فلافل سنجل عربي</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 35 ج.م</span>
+                        <span class="price-tag">كبير: 35 ج.م</span>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="item-header"><span class="item-name">فلافل دبل عربي</span></div>
+                    <div class="price-variants">
+                        <span class="price-tag">وسط: 60 ج.م</span>
+                        <span class="price-tag">كبير: 60 ج.م</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="extra-box">
+                <div class="extra-item">تومية صغيرة: <span>10 ج.م</span></div>
+                <div class="extra-item">تومية كبيرة: <span>20 ج.م</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="contact-section">
+        <h2><i class="fas fa-truck"></i> للطلب والتوصيل السريع</h2>
+        
+        <div class="address-box">
+            <i class="fas fa-map-marker-alt"></i> العنوان: قنا - الشؤون - أمام أكسسوار أبو علاء
+        </div>
+        
+        <div class="phone-grid">
+            <a href="https://wa.me/201007283543" class="btn-call whatsapp-sticky" target="_blank">
+                <i class="fab fa-whatsapp"></i> اطلب عبر الواتساب (01007283543)
+            </a>
+            
+            <a href="tel:01007283543" class="btn-call"><i class="fas fa-phone-alt"></i> 01007283543</a>
+            <a href="tel:01098011728" class="btn-call"><i class="fas fa-phone-alt"></i> 01098011728</a>
+            <a href="tel:01159759075" class="btn-call"><i class="fas fa-phone-alt"></i> 01159759075</a>
+            <a href="tel:01015854591" class="btn-call"><i class="fas fa-phone-alt"></i> 01015854591</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 جميع الحقوق محفوظة لمطعم مأكولات الشام (أبو محسن السوري)</p>
+    </footer>
+
+    <script>
+        const buttons = document.querySelectorAll('.category-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                buttons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
